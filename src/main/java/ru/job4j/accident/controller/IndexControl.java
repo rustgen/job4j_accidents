@@ -1,4 +1,4 @@
-package ru.job4j.accidents.controller;
+package ru.job4j.accident.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
