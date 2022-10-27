@@ -18,12 +18,12 @@ public class AccidentService {
         return accidentMem.add(accident);
     }
 
-    public void update(Accident accident) {
-        accidentMem.update(accident);
+    public boolean update(Accident accident) {
+        return accidentMem.update(accident);
     }
 
-    public void delete(Accident accident) {
-        accidentMem.delete(accident);
+    public boolean delete(Accident accident) {
+        return accidentMem.delete(accident);
     }
 
     public Optional<Accident> findById(int id) {
