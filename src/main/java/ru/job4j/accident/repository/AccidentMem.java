@@ -3,11 +3,9 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -15,20 +13,27 @@ public class AccidentMem {
 
     private final HashMap<Integer, Accident> accidents = new HashMap<>();
     private final HashMap<Integer, AccidentType> accidentTypes = new HashMap<>(3);
+    private final Set<Rule> rules = new HashSet<>(3);
     private final AtomicInteger idsAccident = new AtomicInteger(4);
 
     public AccidentMem() {
+        Rule rule = new Rule(1, "Article. 1");
+        rules.add(rule);
+        Rule rule1 = new Rule(2, "Article. 2");
+        rules.add(rule1);
+        Rule rule2 = new Rule(3, "Article. 3");
+        rules.add(rule2);
         accidentTypes.put(1, new AccidentType(1, "Two vehicles"));
         accidentTypes.put(2, new AccidentType(2, "Vehicle and human"));
         accidentTypes.put(3, new AccidentType(3, "Vehicle and bike"));
         accidents.put(1, new Accident(1, "accident 1", "Texting while driving",
-                "09267 Anniversary Place", accidentTypes.get(1)));
+                "09267 Anniversary Place", accidentTypes.get(1), rules));
         accidents.put(2, new Accident(2, "accident 2", "Running a red light or disobeying a sign",
-                "48649 Norway Maple Alley", accidentTypes.get(2)));
+                "48649 Norway Maple Alley", accidentTypes.get(2), rules));
         accidents.put(3, new Accident(3, "accident 3", "Driving under the influence",
-                "57945 Shoshone Park", accidentTypes.get(1)));
+                "57945 Shoshone Park", accidentTypes.get(1), rules));
         accidents.put(4, new Accident(4, "accident 4", "Speeding",
-                "88 Mesta Point", accidentTypes.get(3)));
+                "88 Mesta Point", accidentTypes.get(3), rules));
     }
 
     public Optional<Accident> add(Accident accident) {
