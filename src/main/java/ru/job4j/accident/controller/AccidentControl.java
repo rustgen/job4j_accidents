@@ -3,10 +3,7 @@ package ru.job4j.accident.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 
@@ -32,9 +29,9 @@ public class AccidentControl {
         return "redirect:/index";
     }
 
-    @GetMapping("/formUpdateAccident/{accidentId}")
-    public String viewUpdateAccident(Model model, @PathVariable("accidentId") int id) {
-        model.addAttribute("accident", accidentService.findById(id));
-        return "editAccident";
+    @GetMapping("/formUpdateAccident")
+    public String update(@RequestParam("id") int id, Model model) {
+        model.addAttribute("accident", accidentService.findById(id).get());
+        return "updateAccident";
     }
 }

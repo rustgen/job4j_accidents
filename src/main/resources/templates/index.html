@@ -35,8 +35,8 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Accident</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Accident Name</th>
+                        <th scope="col">Redact</th>
                         <th scope="col">Description</th>
                         <th scope="col">Address</th>
                     </tr>
@@ -44,12 +44,12 @@
                 <tbody>
                     <tr th:each="accident: ${accidents}">
                         <td th:text="${accident.id}"></td>
+                        <td th:text="${accident.name}"></td>
                         <td>
-                            <a th:href="@{|/formUpdateAccident/${accident.id}|}">
+                            <a th:href="@{|/formUpdateAccident?id=${accident.id}|}">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
-                        <td th:text="${accident.name}"></td>
                         <td th:text="${accident.text}"></td>
                         <td th:text="${accident.address}"></td>
                     </tr>
