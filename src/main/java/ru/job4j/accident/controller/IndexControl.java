@@ -18,6 +18,7 @@ public class IndexControl {
     public String index(Model model) {
         model.addAttribute("user", "new User");
         model.addAttribute("accidents", accidentService.findAll());
+        model.addAttribute("types", accidentService.findAllTypes());
         return "index";
     }
 }
