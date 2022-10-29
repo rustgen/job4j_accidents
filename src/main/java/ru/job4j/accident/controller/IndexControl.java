@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.RuleService;
 
-import java.util.Scanner;
-
 @Controller
 @AllArgsConstructor
 public class IndexControl {

@@ -36,10 +36,6 @@ public class RuleMem {
         return new ArrayList<>(rules.values());
     }
 
-    public List<String> findAllNames() {
-        return rules.values().stream().map(Rule::getName).collect(Collectors.toList());
-    }
-
     public Set<Rule> getByIds(Set<Integer> ids) {
         return ids.stream().map(rules::get).collect(Collectors.toSet());
     }

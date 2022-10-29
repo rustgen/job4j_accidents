@@ -6,7 +6,10 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.RuleMem;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -28,10 +31,6 @@ public class RuleService {
 
     public Collection<Rule> findAll() {
         return ruleMem.findAll();
-    }
-
-    public List<String> findAllNames() {
-        return ruleMem.findAllNames();
     }
 
     public Set<Rule> getByIds(Set<Integer> ids) {

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.RuleService;
 
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -29,21 +29,18 @@ public class AccidentControl {
 
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int id,
-                       @RequestParam(value = "rIds", required = false) Set<Integer> ruleIds) {
+                       @RequestParam(value = "rIds", required = false) Set<String> rules) {
         accident.setType(accidentService.findTypeById(id).orElseThrow(NoSuchElementException::new));
-        ruleIds.forEach(ruleId -> accident.getRules().add(ruleService.findById(ruleId)
-                .orElseThrow(NoSuchElementException::new)));
+        setRulesByUpdate(accident, rules);
         accidentService.add(accident);
         return "redirect:/index";
     }
 
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int id,
-                         @RequestParam(value = "rIds", required = false) Set<Integer> ruleIds) {
+                         @RequestParam(value = "rIds", required = false) Set<String> rules) {
         accident.setType(accidentService.findTypeById(id).orElseThrow(NoSuchElementException::new));
-        ruleIds.forEach(ruleId -> accident.getRules().add(ruleService.findById(ruleId)
-                .orElseThrow(NoSuchElementException::new)));
-        ruleService.setRules(accident);
+        setRulesByUpdate(accident, rules);
         accidentService.update(accident);
         return "redirect:/index";
     }
@@ -55,5 +52,15 @@ public class AccidentControl {
         model.addAttribute("accident", accidentService.findById(id)
                 .orElseThrow(NoSuchElementException::new));
         return "updateAccident";
+    }
+
+    private void setRulesByUpdate(Accident accident, Set<String> rules) {
+        Set<Rule> set = new HashSet<>();
+        for (String rule : rules) {
+            int i = Integer.parseInt(rule);
+            Optional<Rule> optional = ruleService.findById(i);
+            optional.ifPresent(set::add);
+        }
+        accident.setRules(set);
     }
 }
