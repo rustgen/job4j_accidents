@@ -3,7 +3,7 @@ package ru.job4j.accident.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -12,25 +12,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AccidentService {
 
-    private final AccidentMem accidentMem;
+    private final AccidentJdbcTemplate accidentJdbcTemplate;
 
     public Optional<Accident> add(Accident accident) {
-        return accidentMem.add(accident);
+        return accidentJdbcTemplate.add(accident);
     }
 
     public boolean update(Accident accident) {
-        return accidentMem.update(accident);
+        return accidentJdbcTemplate.update(accident);
     }
 
     public boolean delete(Accident accident) {
-        return accidentMem.delete(accident);
+        return accidentJdbcTemplate.delete(accident);
     }
 
     public Optional<Accident> findById(int id) {
-        return accidentMem.findById(id);
+        return accidentJdbcTemplate.findById(id);
     }
 
     public Collection<Accident> findAll() {
-        return accidentMem.findAll();
+        return accidentJdbcTemplate.findAll();
     }
 }
