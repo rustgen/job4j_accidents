@@ -57,12 +57,4 @@ public class AccidentMem {
     public Collection<Accident> findAll() {
         return new ArrayList<>(accidents.values());
     }
-
-    public Optional<AccidentType> findTypeById(int id) {
-        return Optional.of(accidentTypes.get(id));
-    }
-
-    public Collection<AccidentType> findAllTypes() {
-        return new ArrayList<>(accidentTypes.values());
-    }
 }

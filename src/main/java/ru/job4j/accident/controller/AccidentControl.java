@@ -11,6 +11,7 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.RuleService;
+import ru.job4j.accident.service.TypeService;
 
 import java.util.*;
 
@@ -18,11 +19,12 @@ import java.util.*;
 @AllArgsConstructor
 public class AccidentControl {
     private final AccidentService accidentService;
+    private final TypeService typeService;
     private final RuleService ruleService;
 
     @GetMapping("/createAccident")
     public String createAccident(Model model) {
-        model.addAttribute("types", accidentService.findAllTypes());
+        model.addAttribute("types", typeService.findAllTypes());
         model.addAttribute("rules", ruleService.findAll());
         return "createAccident";
     }
@@ -30,7 +32,7 @@ public class AccidentControl {
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int id,
                        @RequestParam(value = "rIds", required = false) Set<String> rules) {
-        accident.setType(accidentService.findTypeById(id).orElseThrow(NoSuchElementException::new));
+        accident.setType(typeService.findTypeById(id).orElseThrow(NoSuchElementException::new));
         setRulesByUpdate(accident, rules);
         accidentService.add(accident);
         return "redirect:/index";
@@ -39,7 +41,7 @@ public class AccidentControl {
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int id,
                          @RequestParam(value = "rIds", required = false) Set<String> rules) {
-        accident.setType(accidentService.findTypeById(id).orElseThrow(NoSuchElementException::new));
+        accident.setType(typeService.findTypeById(id).orElseThrow(NoSuchElementException::new));
         setRulesByUpdate(accident, rules);
         accidentService.update(accident);
         return "redirect:/index";
@@ -47,7 +49,7 @@ public class AccidentControl {
 
     @GetMapping("/formUpdateAccident")
     public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("types", accidentService.findAllTypes());
+        model.addAttribute("types", typeService.findAllTypes());
         model.addAttribute("rules", ruleService.findAll());
         model.addAttribute("accident", accidentService.findById(id)
                 .orElseThrow(NoSuchElementException::new));
