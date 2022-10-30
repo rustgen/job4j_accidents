@@ -29,7 +29,7 @@ public class RuleMem {
     }
 
     public Optional<Rule> findById(int id) {
-        return Optional.of(rules.get(id));
+        return Optional.ofNullable(rules.get(id));
     }
 
     public Collection<Rule> findAll() {
