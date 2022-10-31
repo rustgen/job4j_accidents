@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.Rule;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @AllArgsConstructor
@@ -14,7 +17,11 @@ public class AccidentJdbcTemplate {
             insert into accident (name, text, address, type_id) values (?, ?, ?, ?)
             """;
     public static final String GET_ALL = """
-            select id, name, text, address, type_id from accident
+            select *
+            from accident a
+            join type t on a.type_id = t.id
+            join accident_rule ar on ar.accident_id = a.id
+            join rule r on r.id = ar.rule_id
             """;
     public static final String UPDATE = """
             update accident set name = ?, text = ?, address = ?, type_id = ? where id = ?
@@ -28,6 +35,7 @@ public class AccidentJdbcTemplate {
 
     private final JdbcTemplate jdbc;
     private final TypeJdbcTemplate typeJdbcTemplate;
+    private final RuleJdbcTemplate ruleJdbcTemplate;
 
     public Optional<Accident> add(Accident accident) {
         jdbc.update(ADD,
@@ -45,6 +53,7 @@ public class AccidentJdbcTemplate {
                     accident.setName(rs.getString("text"));
                     accident.setName(rs.getString("address"));
                     typeJdbcTemplate.findTypeById(rs.getInt("type_id"));
+                    accident.setRules((Set<Rule>) ruleJdbcTemplate.getRulesById(accident.getId()));
                     return accident;
                 });
     }

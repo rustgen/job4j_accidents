@@ -7,8 +7,6 @@ import ru.job4j.accident.model.Rule;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -26,6 +24,10 @@ public class RuleJdbcTemplate {
 
     public static final String FIND_BY_ID = """
             select id, name from rule where id = ?
+            """;
+    public static final String FIND_BY_IDS = """
+            select * from rule where id in (select rule_id from accident_rule where
+            accident_id = ?)
             """;
 
     private final JdbcTemplate jdbc;
@@ -62,18 +64,13 @@ public class RuleJdbcTemplate {
                 });
     }
 
-    public Set<Rule> getByIds(Set<Integer> ids) {
-        return ids.stream().map(
-                id -> {
-                    Rule rsl = (Rule) jdbc.query(FIND_BY_ID,
-                            (rs, row) -> {
-                                Rule rule = new Rule();
-                                rule.setId(rs.getInt("id"));
-                                rule.setName(rs.getString("name"));
-                                return rule;
-                            }, id);
-                    return rsl;
-                }
-        ).collect(Collectors.toSet());
+    public Collection<Rule> getRulesById(int id) {
+        return jdbc.query(FIND_BY_IDS,
+                (rs, row) -> {
+                    Rule rule = new Rule();
+                    rule.setId(rs.getInt("id"));
+                    rule.setName(rs.getString("name"));
+                    return rule;
+                }, id);
     }
 }

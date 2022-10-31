@@ -33,15 +33,11 @@ public class RuleService {
         return ruleJdbcTemplate.findAll();
     }
 
-    public Set<Rule> getByIds(Set<Integer> ids) {
-        return ruleJdbcTemplate.getByIds(ids);
+    public Set<Rule> getRulesById(int id) {
+        return new HashSet<>(ruleJdbcTemplate.getRulesById(id));
     }
 
     public void setRules(Accident accident) {
-        Set<Integer> set = new HashSet<>();
-        for (Rule rule : accident.getRules()) {
-            set.add(rule.getId());
-        }
-        accident.setRules(getByIds(set));
+        accident.setRules(getRulesById(accident.getId()));
     }
 }

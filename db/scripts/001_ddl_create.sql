@@ -1,16 +1,16 @@
 create TABLE IF NOT EXISTS rule (
   id serial primary key,
-  name varchar(2000)
+  name varchar
 );
 
 create TABLE IF NOT EXISTS type (
   id serial primary key,
-  name varchar(2000)
+  name varchar
 );
 
 create TABLE IF NOT EXISTS accident (
   id serial primary key,
-  name varchar(2000),
+  name varchar,
   text text,
   address text,
   type_id INT REFERENCES type(id)
