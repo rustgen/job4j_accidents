@@ -13,13 +13,13 @@ import java.util.Optional;
 public class RuleJdbcTemplate {
 
     public static final String ADD = """
-            insert into rule (name) values (?)
+            insert into accident_rule (accident_id, rule_id) values (?, ?)
             """;
     public static final String GET_ALL = """
             select id, name from rule
             """;
     public static final String UPDATE = """
-            update rule set name = ? where id = ?
+            delete from accident_rule where accident_id = ?
             """;
 
     public static final String FIND_BY_ID = """
@@ -32,26 +32,23 @@ public class RuleJdbcTemplate {
 
     private final JdbcTemplate jdbc;
 
-    public Optional<Rule> add(Rule rule) {
-        jdbc.update(ADD,
-                rule.getName());
-        return Optional.ofNullable(rule);
+    public void add(Collection<Rule> rules, int accidentID) {
+        rules.forEach(rule -> jdbc.update(ADD, accidentID, rule.getId()));
     }
 
-    public boolean update(Rule rule) {
-        return jdbc.update(UPDATE,
-                rule.getName(), rule.getId()) > 0;
+    public void update(Collection<Rule> rules, int accidentID) {
+        jdbc.update(UPDATE, accidentID);
+        add(rules, accidentID);
     }
 
     public Optional<Rule> findById(int id) {
-        Rule rsl = (Rule) jdbc.query(FIND_BY_ID,
+        return Optional.ofNullable(jdbc.queryForObject(FIND_BY_ID,
                 (rs, row) -> {
                     Rule rule = new Rule();
                     rule.setId(rs.getInt("id"));
                     rule.setName(rs.getString("name"));
                     return rule;
-                }, id);
-        return Optional.ofNullable(rsl);
+                }, id));
     }
 
     public Collection<Rule> findAll() {

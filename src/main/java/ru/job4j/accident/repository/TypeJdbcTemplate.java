@@ -22,14 +22,13 @@ public class TypeJdbcTemplate {
     private final JdbcTemplate jdbc;
 
     public Optional<AccidentType> findTypeById(int id) {
-        AccidentType rsl = (AccidentType) jdbc.query(FIND_BY_ID,
+        return Optional.ofNullable(jdbc.queryForObject(FIND_BY_ID,
                 (rs, row) -> {
                     AccidentType type = new AccidentType();
                     type.setId(rs.getInt("id"));
                     type.setName(rs.getString("name"));
                     return type;
-                }, id);
-        return Optional.ofNullable(rsl);
+                }, id));
     }
 
     public Collection<AccidentType> findAllTypes() {

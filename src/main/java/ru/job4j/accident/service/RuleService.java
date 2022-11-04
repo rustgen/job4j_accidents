@@ -17,12 +17,12 @@ public class RuleService {
 
     private final RuleJdbcTemplate ruleJdbcTemplate;
 
-    public Optional<Rule> add(Rule rule) {
-        return ruleJdbcTemplate.add(rule);
+    public void add(Collection<Rule> rules, int accidentID) {
+        ruleJdbcTemplate.add(rules, accidentID);
     }
 
-    public boolean update(Rule rule) {
-        return ruleJdbcTemplate.update(rule);
+    public void update(Collection<Rule> rules, int accidentID) {
+        ruleJdbcTemplate.update(rules, accidentID);
     }
 
     public Optional<Rule> findById(int id) {
