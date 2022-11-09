@@ -14,18 +14,18 @@ public class RuleHibernate {
     private final CrudRepository crudRepository;
 
     public Optional<Rule> findById(int id) {
-        return crudRepository.optional("FROM rule WHERE id = :fId",
+        return crudRepository.optional("FROM Rule WHERE id = :fId",
                 Rule.class,
                 Map.of("fId", id));
     }
 
     public Collection<Rule> findAll() {
-        return crudRepository.query("FROM rule",
+        return crudRepository.query("FROM Rule",
                 Rule.class);
     }
 
     public Collection<Rule> getRulesById(int id) {
-        return crudRepository.query("select * from rule where id in "
+        return crudRepository.query("select * from Rule where id in "
                                     + "(select rule_id from accident_rule where accident_id = fId)",
                 Rule.class,
                 Map.of("fId", id));

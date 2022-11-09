@@ -15,13 +15,13 @@ public class TypeHibernate {
     private final CrudRepository crudRepository;
 
     public Optional<AccidentType> findTypeById(int id) {
-        return crudRepository.optional("FROM type WHERE id = :fId",
+        return crudRepository.optional("FROM AccidentType WHERE id = :fId",
                 AccidentType.class,
                 Map.of("fId", id));
     }
 
     public Collection<AccidentType> findAllTypes() {
-        return crudRepository.query("FROM type",
+        return crudRepository.query("FROM AccidentType",
                 AccidentType.class);
     }
 }

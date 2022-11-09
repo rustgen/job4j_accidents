@@ -20,7 +20,7 @@ public class AccidentHibernate {
     }
 
     public List<Accident> getAll() {
-        return crudRepository.query("FROM accident join fetch type join fetch rule",
+        return crudRepository.query("FROM Accident a join fetch a.type join fetch a.rules",
                 Accident.class);
     }
 
@@ -36,7 +36,7 @@ public class AccidentHibernate {
     }
 
     public Optional<Accident> findById(int id) {
-        return crudRepository.optional("FROM accident WHERE id = :fId",
+        return crudRepository.optional("FROM Accident a join fetch a.type join fetch a.rules WHERE a.id = :fId",
                 Accident.class,
                 Map.of("fId", id));
     }
