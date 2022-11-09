@@ -3,7 +3,7 @@ package ru.job4j.accident.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.repository.TypeJdbcTemplate;
+import ru.job4j.accident.repository.TypeHibernate;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -12,13 +12,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TypeService {
 
-    private final TypeJdbcTemplate typeJdbcTemplate;
+    private final TypeHibernate typeHibernate;
 
     public Optional<AccidentType> findTypeById(int id) {
-        return typeJdbcTemplate.findTypeById(id);
+        return typeHibernate.findTypeById(id);
     }
 
     public Collection<AccidentType> findAllTypes() {
-        return typeJdbcTemplate.findAllTypes();
+        return typeHibernate.findAllTypes();
     }
 }
