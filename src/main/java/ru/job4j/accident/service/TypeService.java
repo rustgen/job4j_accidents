@@ -19,6 +19,6 @@ public class TypeService {
     }
 
     public Collection<AccidentType> findAllTypes() {
-        return (Collection<AccidentType>) typeHibernate.findAll();
+        return typeHibernate.findAll();
     }
 }

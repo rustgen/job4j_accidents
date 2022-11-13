@@ -22,7 +22,7 @@ public class RuleService {
     }
 
     public Collection<Rule> findAll() {
-        return (Collection<Rule>) ruleHibernate.findAll();
+        return ruleHibernate.findAll();
     }
 
     public Set<Rule> getRulesById(int id) {

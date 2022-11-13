@@ -31,6 +31,6 @@ public class AccidentService {
     }
 
     public Collection<Accident> findAll() {
-        return (Collection<Accident>) accidentHibernate.findAll();
+        return accidentHibernate.findAll();
     }
 }
