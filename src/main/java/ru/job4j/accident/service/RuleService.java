@@ -14,7 +14,6 @@ import java.util.*;
 public class RuleService {
 
     private final RuleRepository ruleHibernate;
-    private final AccidentRepository accidentHibernate;
 
     public Optional<Rule> findById(int id) {
         return ruleHibernate.findById(id);
@@ -22,14 +21,5 @@ public class RuleService {
 
     public Collection<Rule> findAll() {
         return ruleHibernate.findAll();
-    }
-
-    public Set<Rule> getRulesById(int id) {
-        Optional<Accident> optional = accidentHibernate.findById(id);
-        return new HashSet<>(optional.orElseThrow(NoSuchElementException::new).getRules());
-    }
-
-    public void setRules(Accident accident) {
-        accident.setRules(getRulesById(accident.getId()));
     }
 }
