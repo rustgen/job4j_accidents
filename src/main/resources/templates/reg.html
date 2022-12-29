@@ -20,26 +20,21 @@
 
 <body>
 <div class="container py-3">
-    <main class="form-signin">
-        <h1 class="h3 mb-3 fw-normal">Log In</h1>
-        <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
-            <span th:text="${errorMessage}"></span>
-        </div>
-        <form th:action="@{/login}" method="post">
+    <main class="form-reg">
+        <h1 class="h3 mb-3 fw-normal">Sign UP</h1>
+
+        <form th:action="@{/reg}" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="username" name="username">
                 <label for="username">User name</label>
             </div>
-            <div class="form-floating mb-4">
+            <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="password" name="password">
                 <label for="password">Password</label>
             </div>
-            <p>
-                Haven't account yet? <a th:href="@{/reg}">Sign Up</a>
-            </p>
             <hr class="my-4">
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Log In</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </main>
 </div>
