@@ -28,7 +28,7 @@ public class Accident {
     @JoinColumn(name = "type_id")
     private AccidentType type;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "accident_rule",
             joinColumns = { @JoinColumn(name = "accident_id")},

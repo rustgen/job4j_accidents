@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.model.User;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.RuleService;
 import ru.job4j.accident.service.TypeService;
@@ -23,7 +24,7 @@ public class AccidentControl {
     private final RuleService ruleService;
 
     @GetMapping("/createAccident")
-    public String createAccident(Model model) {
+    public String createAccident(Model model, User user) {
         model.addAttribute("types", typeService.findAllTypes());
         model.addAttribute("rules", ruleService.findAll());
         return "createAccident";
@@ -48,7 +49,7 @@ public class AccidentControl {
     }
 
     @GetMapping("/formUpdateAccident")
-    public String update(@RequestParam("id") int id, Model model) {
+    public String update(@RequestParam("id") int id, Model model, User user) {
         model.addAttribute("types", typeService.findAllTypes());
         model.addAttribute("rules", ruleService.findAll());
         model.addAttribute("accident", accidentService.findById(id)
